@@ -1,0 +1,22 @@
+{
+  "name": "kiss_websocket",
+  "version": "1.0.0",
+  "description": "======================= Notes on kiss_websocket =======================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlyoleg/kiss_websocket.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/charlyoleg/kiss_websocket/issues"
+  },
+  "homepage": "https://github.com/charlyoleg/kiss_websocket#readme",
+  "dependencies": {
+    "ws": "^7.1.2"
+  }
+}
