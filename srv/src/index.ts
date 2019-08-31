@@ -5,6 +5,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import fs from "fs";
 import https from "https";
+import WebSocket from "ws";
+
 
 const ssl_options = {
     key: fs.readFileSync("srv/kiss_websocket.key"),
@@ -14,8 +16,8 @@ const https_port = 8007;
 
 const app = express();
 const server = https.createServer(ssl_options, app);
-//const io = socket_io(server);
 const jsonParser = bodyParser.json();
+const wss = new WebSocket.Server({ server });
 
 
 //////////////////////////////
@@ -88,21 +90,27 @@ app.get('/group_result', function (req: any, res: any) {
 // websocket service
 //////////////////////////////
 
-//io.on('connection', function (socket: any) {
-//  console.log('socketio connecting');
-//  //console.log(socket);
-//  //console.log(socket.client.conn);
-//  // send event to all clients
-//  socket.on('one more contribution', function (event_data: any) {
-//  console.log('Event "one more contribution": ', event_data);
-//    let group_result = {total: total_contribution};
-//    socket.emit('update result', group_result);
-//  });
-//  // disconnecting
-//  socket.on('disconnect', function () {
-//    console.log('socketio disconnecting');
-//  });
-//});
+wss.on('connection', (ws: WebSocket) => {
+  console.log('ws: WebSocket connecting');
+
+  ws.on('message', (msg: string) => {
+    console.log('received: %s', msg);
+    ws.send(`Hello, you sent -> ${msg}`);
+  });
+
+  ws.on('one more contribution', (msg: string) => {
+    console.log('Event "one more contribution": ', msg);
+    let group_result = {total: total_contribution};
+    ws.send(`update result : ${group_result}`);
+  });
+
+  ws.on('disconnect', () => {
+    console.log('ws: WebSocket disconnecting');
+  });
+
+  //send a message just after getting connected
+  ws.send('Hi there, I am a WebSocket server');
+});
 
 
 //////////////////////////////
