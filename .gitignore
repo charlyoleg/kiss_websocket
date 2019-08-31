@@ -1,0 +1,9 @@
+# .gitignore for kiss_websocket
+*~
+*.swp
+node_modules
+.venv
+*.pdf
+web/dist/
+srv/dist/
+client_js/dist/
