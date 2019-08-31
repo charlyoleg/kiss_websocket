@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es6",
+    "strict": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "typeRoots": ["node_modules/@types"],
+    "removeComments": false,
+    "outDir": "../dist/js"
+  },
+  "include": [
+    "**/*"
+  ]
+}

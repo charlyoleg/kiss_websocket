@@ -33,12 +33,12 @@ app.get('/', function (req: any, res: any) {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/js/kiss_socketio.js', function (req: any, res: any) {
-  res.sendFile(__dirname + '/kiss_socketio.js');
+app.get('/js/kiss_websocket.js', function (req: any, res: any) {
+  res.sendFile(__dirname + '/kiss_websocket.js');
 });
 
-app.get('/css/kiss_socketio_style.css', function (req: any, res: any) {
-  res.sendFile(__dirname + '/kiss_socketio_style.css');
+app.get('/css/kiss_websocket_style.css', function (req: any, res: any) {
+  res.sendFile(__dirname + '/kiss_websocket_style.css');
 });
 
 

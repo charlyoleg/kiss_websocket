@@ -1,0 +1,28 @@
+//- index.pug
+doctype html
+html(lang="fr")
+  head
+    meta(charset='utf-8')
+    title kiss_websocket
+    meta(name='description', content='A sandbox to experiment WebSocket')
+    meta(name='author', content='charlyoleg')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='css/kiss_websocket_style.css?v=1.0')
+    //link(rel='manifest', href='/manifest.json')
+    //link(rel='icon', href='kiss_websocket_favicon.svg', type='image/svg+xml')
+  body
+    h1 Kiss WebSocket client in browser
+    a(href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket") WebSocket
+    .mycontribution My contributions
+      input#quantity_in(type="number" min="0" max="10000" step="1" value="1")
+      button#button_send(type="button") Send
+    .groupresult_push
+      p The pushed group-result:
+      p#push_quantity_out Zero
+    .groupresult_pull
+      p The pulled group-result:
+      button#button_ask(type="button") Ask
+      p#pull_quantity_out Zero
+    // the logic
+    //script(type='module', src='js/kiss_websocket.js?v=1.0')
+    script(src='js/kiss_websocket.js?v=1.0')
