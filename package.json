@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "create_certificate": "srv/create_a_self_signed_certificate.sh",
+    "install_py": "PIPENV_VENV_IN_PROJECT=1 pipenv install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
