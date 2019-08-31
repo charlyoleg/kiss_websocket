@@ -36,14 +36,6 @@ ws.on('message', function incoming(data) {
 //  let current_result: number = parseFloat(event_data.total);
 //  console.log(">>> socketio event_result: " + current_result);
 //});
-//
-//socket.on('connect', function (event_data: any) {
-//  console.log('>>> socketio connecting. event_data: ', event_data);
-//});
-//
-//socket.on('disconnect', function (event_data: any) {
-//  console.log('>>> socketio disconnecting. event_data: ', event_data);
-//});
 
 function stop_websocket () {
   ws.close();

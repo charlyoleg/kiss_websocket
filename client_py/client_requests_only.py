@@ -2,7 +2,7 @@
 
 """
 client_requests_only.py
-a small python client using only requests (no socketio involved)
+a small python client using only requests (no websocket involved)
 """
 
 import requests

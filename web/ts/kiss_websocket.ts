@@ -60,7 +60,7 @@ function askResult () {
 
 
 /////////////////////////////////////////
-// WebSocket-Socketio event receivers
+// WebSocket event receivers
 /////////////////////////////////////////
 
 //socket.on('update result', function (event_data: any) {

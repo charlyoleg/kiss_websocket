@@ -2,7 +2,7 @@
 
 """
 client.py
-a small python socketio client
+a small python websocket client
 """
 
 import requests
