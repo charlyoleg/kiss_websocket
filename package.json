@@ -4,11 +4,18 @@
   "description": "======================= Notes on kiss_websocket =======================",
   "main": "srv/dist/index.js",
   "scripts": {
+    "clean_web": "rm -fr web/dist",
+    "serve_web": "live-server web/dist",
+    "start": "run-s clean_web build_web serve_web",
     "create_certificate": "srv/create_a_self_signed_certificate.sh",
     "clean_srv": "rm -fr srv/dist",
     "build_srv_js": "tsc -p srv",
     "serve": "node srv/dist/index.js",
     "resrv_ws": "run-s clean_srv build_srv_js serve",
+    "clean_client_js": "rm -fr client_js/dist",
+    "build_client_js": "tsc -p client_js",
+    "run_client_js": "node client_js/dist/client.js",
+    "rerun_client_js": "run-s clean_client_js build_client_js run_client_js",
     "install_py": "PIPENV_VENV_IN_PROJECT=1 pipenv install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
