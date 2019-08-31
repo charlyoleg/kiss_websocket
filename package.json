@@ -17,6 +17,8 @@
     "run_client_js": "node client_js/dist/client.js",
     "rerun_client_js": "run-s clean_client_js build_client_js run_client_js",
     "install_py": "PIPENV_VENV_IN_PROJECT=1 pipenv install",
+    "run_client_py": "pipenv run client_py/client.py",
+    "run_client_requests_only_py": "pipenv run client_py/client_requests_only.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
