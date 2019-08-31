@@ -104,12 +104,12 @@ wss.on('connection', (ws: WebSocket) => {
     ws.send(`update result : ${group_result}`);
   });
 
-  ws.on('disconnect', () => {
+  ws.on('close', () => {
     console.log('ws: WebSocket disconnecting');
   });
 
   //send a message just after getting connected
-  ws.send('Hi there, I am a WebSocket server');
+  ws.send('Hello from the WebSocket server!');
 });
 
 

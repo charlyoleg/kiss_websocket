@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import https from 'https';
-//import io from 'socket.io-client';
+import WebSocket from 'ws';
 
 
 const server_name = 'https://localhost:8007';
@@ -10,12 +10,27 @@ const agent = new https.Agent({
   rejectUnauthorized: false
 });
 
-//const socket = io(server_name , {rejectUnauthorized: false });
+const ws = new WebSocket('wss://localhost:8007', {rejectUnauthorized: false });
 
 
 //////////////////////////////////
-// register the listened events
+// register the listened websocket events
 //////////////////////////////////
+
+ws.on('open', function open() {
+  console.log('Hello from the client')
+  ws.send('Hello from the client');
+});
+
+ws.on('close', function close() {
+  console.log('Bye from the client')
+});
+
+ws.on('message', function incoming(data) {
+  console.log('The client receives a message:')
+  console.log(data);
+});
+
 
 //socket.on('update result', function (event_data: any) {
 //  let current_result: number = parseFloat(event_data.total);
@@ -29,10 +44,10 @@ const agent = new https.Agent({
 //socket.on('disconnect', function (event_data: any) {
 //  console.log('>>> socketio disconnecting. event_data: ', event_data);
 //});
-//
-//function stop_socket () {
-//  socket.close();
-//}
+
+function stop_websocket () {
+  ws.close();
+}
 
 
 //////////////////////////////////
@@ -89,7 +104,7 @@ setTimeout(post_contribution, 2000, 5);
 setTimeout(post_contribution, 2500, 7);
 setTimeout(get_result, 3000);
 
-//setTimeout(stop_socket, 3500);
+setTimeout(stop_websocket, 3500);
 
 function end_of_script () {
   console.log('client.ts says Bye!');
