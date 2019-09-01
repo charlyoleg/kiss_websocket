@@ -2,7 +2,7 @@
 
 
 const server_name: string = 'https://localhost:8007';
-const socket = new WebSocket(server_name);
+const socket = new WebSocket('wss://localhost:8007');
 
 
 /////////////////////////////////////////
