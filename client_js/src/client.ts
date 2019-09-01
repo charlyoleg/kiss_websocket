@@ -26,9 +26,8 @@ ws.on('close', () => {
   console.log('Bye from the client')
 });
 
-ws.on('message', (msg_payload) => {
-  console.log('Client receives: ' + msg_payload)
-  let msg_str = msg_payload.toString();
+ws.on('message', (msg_str: string) => {
+  console.log('C1: Client receives: ' + msg_str)
   if (msg_str.search(/^CREPES: /) == 0) {
     console.log("The client considers this event as useful");
     let msg_json = msg_str.replace(/^CREPES: /, '');
@@ -39,8 +38,8 @@ ws.on('message', (msg_payload) => {
   }
 });
 
-ws.on('message', (msg_payload) => {
-  console.log('Again (second registration) Client receives: ' + msg_payload)
+ws.on('message', (msg_payload: string) => {
+  console.log('C2: Again (second registration) Client receives: ' + msg_payload)
 });
 
 function stop_websocket () {
