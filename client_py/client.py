@@ -61,35 +61,6 @@ async def ws_connection():
 
 asyncio.get_event_loop().run_until_complete(ws_connection())
 
-#def on_update_result(event_data):
-#  logger.info('client gets event on_update_result')
-#  #logger.debug(data)
-#  one_total = event_data['total']
-#  logger.info('Update result to {:.02f}'.format(one_total))
-#
-#def on_connect():
-#  logger.info("client_py connected!")
-#
-#def on_disconnect():
-#  logger.info("client_py disconnected!")
-#
-#def on_reconnect():
-#  logger.info('client_pyreconnect')
-#
-#
-#### let's start
-#socket_io = SocketIO('https://127.0.0.1', 8005, LoggingNamespace, verify=False)
-#socket_io.on('connect', on_connect)
-#socket_io.on('disconnect', on_disconnect)
-#socket_io.on('reconnect', on_reconnect)
-## real stuff
-#socket_io.on('update result', on_update_result)
-#
-## wait a bit to check whats happen
-#time.sleep(1.0)
-##payload_json = {"contrib": "2"}
-##socket_io.emit('one more contribution', payload_json);
-#socket_io.wait(seconds=1)
 
 
 ##########################################################
