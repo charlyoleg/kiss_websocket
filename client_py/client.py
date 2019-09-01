@@ -11,6 +11,7 @@ import time
 import json
 import asyncio
 import websockets
+import ssl
 
 
 ##########################################################
@@ -32,6 +33,23 @@ logger.addHandler(logging.StreamHandler())
 # WebSocket registration
 ##########################################################
 
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
+
+
+async def ws_connection():
+  uri = "wss://localhost:8007"
+  async with websockets.connect(uri, ssl=ssl_context) as websocket:
+    logger.info("What's your name? ")
+
+    await websocket.send("roro")
+
+    r_data = await websocket.recv()
+    logger.info("Client receives:")
+    logger.info(r_data)
+
+asyncio.get_event_loop().run_until_complete(ws_connection())
 
 #def on_update_result(event_data):
 #  logger.info('client gets event on_update_result')
