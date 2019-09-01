@@ -1,11 +1,8 @@
 // kiss_websocket.ts
 
-// @ts-ignore
-//import * as zog from '/socket.io/socket.io.js';
-//import io from 'socket.io-client';
 
 const server_name: string = 'https://localhost:8007';
-
+const socket = new WebSocket(server_name);
 
 
 /////////////////////////////////////////
@@ -30,8 +27,8 @@ function sendPoints () {
       throw new Error('ERR026: Network response was not ok.');
     }).then((resJson) => {
       console.log('POST successful with response: ' + JSON.stringify(resJson));
-      // SocketIO emits an event
-      //socket.emit('one more contribution', post_payload);
+      // Send a WebSocket message
+      socket.send('GATEAU: ' + JSON.stringify(post_payload));
     }).catch((err) => {
       console.log('ERR030: POST with error:', err);
     });
@@ -63,23 +60,35 @@ function askResult () {
 // WebSocket event receivers
 /////////////////////////////////////////
 
-//socket.on('update result', function (event_data: any) {
-//  //console.log(event_data);
-//  //let event_data_json = JSON.parse(event_data);
-//  let current_result: number = parseFloat(event_data.total);
-//  console.log("event_result: " + current_result);
-//  (<HTMLParagraphElement>document.querySelector('#push_quantity_out')).innerHTML = current_result.toString();
-//});
-//
-//socket.on('connect', function (event_data: any) {
-//  console.log('socketio connecting. event_data: ', event_data);
-//  //console.log(event_data);
-//});
-//
-//socket.on('disconnect', function (event_data: any) {
-//  console.log('socketio disconnecting. event_data: ', event_data);
-//  //console.log(event_data);
-//});
+socket.addEventListener('open', (event) => {
+  console.log('Hello from the client')
+  socket.send('Hello from the client');
+});
+
+socket.addEventListener('close', (event) => {
+  console.log('Bye from the client')
+});
+
+socket.addEventListener('message', (event) => {
+  let msg_str:string = event.data;
+  console.log('C1: Client receives: ' + msg_str)
+  // Create an event on top of an WebSocket message
+  const eventNameRegex = /^CREPES: /;
+  if (eventNameRegex.test(msg_str)) {
+    console.log("The client considers this event as useful");
+    let msg_json = msg_str.replace(eventNameRegex, '');
+    console.log('msg_json: ' + msg_json);
+    let msg_json2 = JSON.parse(msg_json);
+    let current_result: number = parseFloat(msg_json2.total);
+    console.log("THE CURRENT RESULT: " + current_result);
+    (<HTMLParagraphElement>document.querySelector('#push_quantity_out')).innerHTML = current_result.toString();
+  }
+});
+
+// a send eventListner for message
+socket.addEventListener('message', (event) => {
+  console.log('C2: Again (second registration) Client receives: ' + event.data)
+});
 
 
 /////////////////////////////////////////
@@ -89,6 +98,6 @@ function askResult () {
 document.addEventListener('visibilitychange', () => {
   console.log("Visibility of page has changed!");
   let dummy_payload =  {contrib: '0'};
-  //socket.emit('one more contribution', dummy_payload);
+  socket.send('GATEAU: ' + JSON.stringify(dummy_payload));
 });
 
