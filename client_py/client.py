@@ -24,7 +24,8 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 ### logger
 logging.getLogger('urllib3').setLevel(logging.INFO)
 logger = logging.getLogger('')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
+#logger.setLevel(logging.DEBUG)
 #logger.setLevel(logging.NOTSET)
 logger.addHandler(logging.StreamHandler())
 
@@ -37,17 +38,26 @@ ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
 
-
 async def ws_connection():
   uri = "wss://localhost:8007"
   async with websockets.connect(uri, ssl=ssl_context) as websocket:
-    logger.info("What's your name? ")
-
-    await websocket.send("roro")
+    logger.info("Client WebSocket is connected")
 
     r_data = await websocket.recv()
-    logger.info("Client receives:")
-    logger.info(r_data)
+    logger.info("Client receives: {:s}".format(r_data))
+
+    await websocket.send("Une blague du client")
+    r_data = await websocket.recv()
+    logger.info("Client receives: {:s}".format(r_data))
+
+    point_contribution = 9
+    msg_str = 'GATEAU: ' + json.dumps({"contrib": point_contribution})
+    logger.info('client send: ' + msg_str)
+    await websocket.send(msg_str)
+    r_data = await websocket.recv()
+    logger.info("Client receives: {:s}".format(r_data))
+    r_data = await websocket.recv()
+    logger.info("Client receives: {:s}".format(r_data))
 
 asyncio.get_event_loop().run_until_complete(ws_connection())
 
