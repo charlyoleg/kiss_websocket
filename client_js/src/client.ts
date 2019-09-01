@@ -29,9 +29,10 @@ ws.on('close', () => {
 ws.on('message', (msg_str: string) => {
   console.log('C1: Client receives: ' + msg_str)
   // Create an event on top of an WebSocket message
-  if (msg_str.search(/^CREPES: /) == 0) {
+  const eventNameRegex = /^CREPES: /;
+  if (eventNameRegex.test(msg_str)) {
     console.log("The client considers this event as useful");
-    let msg_json = msg_str.replace(/^CREPES: /, '');
+    let msg_json = msg_str.replace(eventNameRegex, '');
     console.log('msg_json: ' + msg_json);
     let msg_json2 = JSON.parse(msg_json);
     let current_result: number = parseFloat(msg_json2.total);
