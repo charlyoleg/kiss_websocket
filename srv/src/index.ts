@@ -102,7 +102,10 @@ wss.on('connection', (ws: WebSocket) => {
       let group_result = {total: total_contribution};
       let r_msg: string = 'CREPES: ' + JSON.stringify(group_result);
       console.log('Server sends: ' + r_msg)
-      ws.send(r_msg);
+      // broadcasting the message to all clients
+      wss.clients.forEach((client) => {
+        ws.send(r_msg);
+      });
     }
   });
 
