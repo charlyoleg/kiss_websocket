@@ -96,12 +96,18 @@ wss.on('connection', (ws: WebSocket) => {
   ws.on('message', (msg: string) => {
     console.log('received: %s', msg);
     ws.send(`Hello, you sent -> ${msg}`);
+    // Create an event on top of an WebSocket message
+    if (msg.search(/^GATEAU: /) == 0) {
+      console.log("The server considers this event as useful");
+      let group_result = {total: total_contribution};
+      let r_msg: string = 'CREPES: ' + JSON.stringify(group_result);
+      console.log('Server sends: ' + r_msg)
+      ws.send(r_msg);
+    }
   });
 
-  ws.on('one more contribution', (msg: string) => {
-    console.log('Event "one more contribution": ', msg);
-    let group_result = {total: total_contribution};
-    ws.send(`update result : ${group_result}`);
+  ws.on('message', (msg: string) => {
+    console.log('Event "an other message handler": ', msg);
   });
 
   ws.on('close', () => {

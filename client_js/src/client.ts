@@ -28,6 +28,7 @@ ws.on('close', () => {
 
 ws.on('message', (msg_str: string) => {
   console.log('C1: Client receives: ' + msg_str)
+  // Create an event on top of an WebSocket message
   if (msg_str.search(/^CREPES: /) == 0) {
     console.log("The client considers this event as useful");
     let msg_json = msg_str.replace(/^CREPES: /, '');
