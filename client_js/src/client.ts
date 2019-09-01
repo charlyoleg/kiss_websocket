@@ -17,25 +17,31 @@ const ws = new WebSocket('wss://localhost:8007', {rejectUnauthorized: false });
 // register the listened websocket events
 //////////////////////////////////
 
-ws.on('open', function open() {
+ws.on('open', () => {
   console.log('Hello from the client')
   ws.send('Hello from the client');
 });
 
-ws.on('close', function close() {
+ws.on('close', () => {
   console.log('Bye from the client')
 });
 
-ws.on('message', function incoming(data) {
-  console.log('The client receives a message:')
-  console.log(data);
+ws.on('message', (msg_payload) => {
+  console.log('Client receives: ' + msg_payload)
+  let msg_str = msg_payload.toString();
+  if (msg_str.search(/^CREPES: /) == 0) {
+    console.log("The client considers this event as useful");
+    let msg_json = msg_str.replace(/^CREPES: /, '');
+    console.log('msg_json: ' + msg_json);
+    let msg_json2 = JSON.parse(msg_json);
+    let current_result: number = parseFloat(msg_json2.total);
+    console.log("THE CURRENT RESULT: " + current_result);
+  }
 });
 
-
-//socket.on('update result', function (event_data: any) {
-//  let current_result: number = parseFloat(event_data.total);
-//  console.log(">>> socketio event_result: " + current_result);
-//});
+ws.on('message', (msg_payload) => {
+  console.log('Again (second registration) Client receives: ' + msg_payload)
+});
 
 function stop_websocket () {
   ws.close();
@@ -80,8 +86,8 @@ async function post_contribution (point_contribution: number) {
     console.error(error);
   }
   console.log('the end2 of the POST')
-  // generate a Socket.io event
-  //socket.emit('one more contribution', post_payload);
+  // generate a WebSocket message
+  ws.send('GATEAU: ' + JSON.stringify(post_payload));
 }
 
 
